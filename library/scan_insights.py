@@ -47,9 +47,7 @@ def get_system_id(filname):
 
 
 def main():
-    module = AnsibleModule(
-        argument_spec = dict()
-    )
+    module = AnsibleModule(argument_spec={})
 
     system_id = get_system_id(INSIGHTS_SYSTEM_ID_FILE)
 

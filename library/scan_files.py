@@ -114,10 +114,16 @@ def main():
 
         get_checksum = module.params.get('get_checksum')
         should_recurse = module.params.get('recursive')
-        if not should_recurse:
-            path_list = [os.path.join(path, subpath) for subpath in os.listdir(path)]
-        else:
-            path_list = [os.path.join(w_path, f) for w_path, w_names, w_file in os.walk(path) for f in w_file]
+        path_list = (
+            [
+                os.path.join(w_path, f)
+                for w_path, w_names, w_file in os.walk(path)
+                for f in w_file
+            ]
+            if should_recurse
+            else [os.path.join(path, subpath) for subpath in os.listdir(path)]
+        )
+
         for filepath in path_list:
             try:
                 st = os.stat(filepath)
